@@ -25,6 +25,7 @@
 	   
 	    <div id="scene-box">
 		    <canvas id="scene"></canvas>
+			<div class="menu-button" id="button-pause"></div>
 		    <!--a id="version" align="left"></a><br>
 		    <a id="coordinates" align="left"></a>
 		    <a id="biome" align="left"></a-->
@@ -117,18 +118,20 @@
 			Message.hide();
 			
 			document.getElementById('button-play').onclick = function(){
-                                document.getElementById('menu-box').style.visibility = 'hidden';
+                document.getElementById('menu-box').style.visibility = 'hidden';
 				document.getElementById('scene').style.filter = 'none';
+				//document.getElementById('button-pause').style.visibility = 'visible'
 								
 				Vars.changeable.pause = false;
 			};
 			
 			document.addEventListener('keydown', function(e){
-			        if(e.key != 'Escape')
+			    if(e.key != 'Escape')
 				        return;
 						
 				document.getElementById('menu-box').style.visibility = 'visible';
 				document.getElementById('scene').style.filter = 'blur(3px)';
+				document.getElementById('button-pause').style.visibility = 'hidden'
 				
 				Vars.changeable.pause = true;
 			});
@@ -138,11 +141,12 @@
 			};
 			
 			document.getElementById('button-pause').onclick = function(){
-			        document.getElementById('menu-box').style.visibility = 'visible';
+			    document.getElementById('menu-box').style.visibility = 'visible';
 				document.getElementById('scene').style.filter = 'blur(3px)';
+				document.getElementById('button-pause').style.visibility = 'hidden';
 				
 				Vars.changeable.pause = true;
-		        };
+		    };
 			
 			/*function save(){
 			        let blob = new Blob(["Прив!"], {type: "text/plain;charset=utf-8"});

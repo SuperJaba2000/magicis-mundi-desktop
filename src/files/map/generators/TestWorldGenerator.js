@@ -28,13 +28,13 @@ class TestWorldGenerator extends BasicGenerator{
 		
 		
 		if(path <= 0.04){
-			tile.floor = Blocks.mud;
+			tile.floor = Blocks.sand;
 			
 		    //if(river <= 0.04)
 				//tile.floor = ;
-		}else if(path <= 0.2){
+		}else if(path <= 0.1){
 			//path structures zone
-			//tile.floor = Blocks.dirt;
+			tile.floor = Blocks.dirt;
 		}else if(path >= 0.2){
 			tile.elevation = Math.round(path * 10) / 10;
 			//tile.elevation -= Math.floor(river*5);
@@ -48,6 +48,18 @@ class TestWorldGenerator extends BasicGenerator{
 			
 			if(river <= 0.04);
 			    tile.elevation = 0;
+		}*/
+		
+		/*if(new Random().chance(0.4)){
+			if(x<1)
+				return;
+			
+			let leftTile = this.tiles.get(x-1, y);
+			
+			if(leftTile.block == null && leftTile.elevation == tile.elevation){
+				leftTile.block = Blocks.spruce.getWithVariant(0);
+				tile.block = Blocks.spruce.getWithVariant(1);
+			}
 		}*/
 		
 		return tile;

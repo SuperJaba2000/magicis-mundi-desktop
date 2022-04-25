@@ -2,8 +2,9 @@ class BasicGenerator extends BaseGenerator{
 	constructor(){
 		super();
 		
-		//test seed is 2
-	        this.seed = Math.random();
+		//test seed1 is 2
+		//test seed2 is 0.5539712968025277
+	    this.seed = Math.random()**Math.random();
 	}
 	
         generate(tiles, entities){

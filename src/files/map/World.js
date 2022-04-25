@@ -2,8 +2,8 @@ class World{
 	
 	constructor(name, size, height){
 		this.caveGenerator = new CaveGenerator();
-	        this.mainGenerator = new TestWorldGenerator();//new OpenWorldGenerator();
-	        //this.DUNGEON_GENERATOR = new CaveGenerator();
+	    this.mainGenerator = new TestWorldGenerator();//new OpenWorldGenerator();
+	    //this.DUNGEON_GENERATOR = new CaveGenerator();
 			
 		this.activeDimension = 1;
 		

@@ -78,13 +78,13 @@ class TextureLoader{
 
     loaded(){
 		this.uploaded++;
-		console.log(`loaded ${this.uploaded} textures`);
+		//console.log(`loaded ${this.uploaded} textures`);
 		
-                if(this.uploaded == this.all){
+            if(this.uploaded == this.all){
 		        /*drawTiles();
-			console.log("Load is Succesfull!");	*/
+			    console.log("Load is Succesfull!");	*/
                         requestAnimationFrame(Core.update);
-		}
+		    }
         }			
 }
 

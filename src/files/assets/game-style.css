@@ -257,7 +257,22 @@ input:checked + .slider:before {
 
 
 
-
+#button-pause{
+	background-color: #00000000;
+	background-image: url(sprites/ui/pause.png);
+	
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	
+	visibility: hidden;
+	
+	z-index: 4;
+	width: 64px;
+	height: 64px;
+	
+	margin-top: 0;
+}
 
 
 

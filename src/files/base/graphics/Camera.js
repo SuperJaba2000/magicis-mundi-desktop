@@ -49,9 +49,6 @@ class Camera{
 			this.position.y = playerPosition.y;
 		}
 		
-		this.position.x = Math.max(minX, playerPosition.x);
-		this.position.y = Math.max(minY, playerPosition.y);
-		
 		
 		//this.position.x = Math.maxVars.changeable.player.position;
 	}
