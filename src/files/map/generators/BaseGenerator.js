@@ -10,13 +10,14 @@ class BaseGenerator{
 		this.height = tiles.height;
 			
 		for(let y = 0; y < this.height; y++){
-		        for(let x = 0; x < this.width; x++){
-			        this.tiles.upd(x, y, this.genTile(x, y));
+		    for(let x = 0; x < this.width; x++){
+			    this.tiles.upd(x, y, this.genTile(x, y));
 					
-				if(y == 0 || x == 0 || y == (this.height-1) || x == (this.width-1))
+				/*if(y == 0 || x == 0 || y == (this.height-1) || x == (this.width-1))
 				        tiles.upd(x, y, new Tile(null, Blocks.barrier, null));
-		        }
-	        }		
+		        }*/
+	        }
+	    }			
 			
 		this.postGenerate();
 		

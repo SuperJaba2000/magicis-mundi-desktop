@@ -1,131 +1,72 @@
 class TextureLoader{
-	constructor(root){
-		this.uploaded = 0;
-	        this.all = 0;
-	
-	        this.objectives = [];
+	constructor(directory){
+		this.directory = directory;
 		
-	        this.root = root;
+		this.objectives = [];
+		this.total = this.uploaded = 0;
 	}
 	
-	addObjectives(obj){
-		if(Array.isArray(obj)){
-			for(var i = 0; i < obj.length; i++){
-				this.objectives.push(obj[i]);
-			}
+	addObjectives(objectives){
+		if(!objectives.length && !objectives.size){
+			this.objectives.push(objectives)
 		}else{
-			this.objectives.push(obj);
+			for(let objective of objectives)
+				this.objectives.push(objective)
 		}
 	}
 	
-	load(obj){
-	        if(obj.textures.length == 1){
-	        	var img = new Image(); 
+	load(objective, callback){
+		//objective is null or undefined
+		if(!objective)
+			return false;
+		
+		//for functions
+		let loader = this;
+		
+		for(let texture = 0; texture < objective.textures.length; texture++){
+			loader.total++;
 			
-			img.onload = function(){
-                                loader.loaded();
-			};
-			
-			img.src = `${this.root}/${obj.group}/${obj.name}/0.png`;
-			
-			//recolor(img, 0x00, 0x00, 0xFF);
-			
-			obj.textures[0] = img;
-	        }else{
-		        for(var v = 0; v < obj.textures.length; v++){
-			        var img = new Image(); 					
+			let image = new Image(); 					
+			image.onload = () => callback();
+			image.src = `${loader.directory}/${objective.group}/${objective.name}/${texture}.png`;
 					
-				img.onload = function(){
-				        loader.loaded();
-			        };
-					
-				img.src = `${this.root}/${obj.group}/${obj.name}/${v}.png`;
-					
-				obj.textures[v] = img;
-				
-		        }
-	        }
-			
-		if(obj.edges){
-			for(var s = 0; s < 4; s++){
-			    var edge = new Image(); 
-                var cliff = new Image();				
-					
-				edge.onload = function(){
-				    loader.loaded();
-			    };
-				
-				cliff.onload = function(){
-					loader.loaded();
-				};
-					
-				edge.src = `${this.root}/${obj.group}/${obj.name}/edge${s}.png`;
-				cliff.src = `${this.root}/${obj.group}/${obj.name}/cliff${s}.png`
-					
-				obj.edges[s] = edge;
-				obj.cliffs[s] = cliff;
-		    }
+			objective.textures[texture] = image;
 		}
-    }
 		
-    loadAll(){
-		this.all = this.objectives.length;
+		if(objective.group != 'floors')
+			return;
 		
-		for(var i = 0; i < this.objectives.length; i++){
-                        this.load(this.objectives[i]);
+		//load edge and cliff textures
+		for(let side = 0; side < 4; side++){
+			loader.total += 2;
+			
+			let edgeImage = new Image(); 
+            let cliffImage = new Image();				
+					
+			edgeImage.onload = cliffImage.onload = () => callback();
+			edgeImage.onerror = cliffImage.onerror = () => loader.total--;
+					
+			edgeImage.src = `${loader.directory}/${objective.group}/${objective.name}/edge${side}.png`;
+			cliffImage.src = `${loader.directory}/${objective.group}/${objective.name}/cliff${side}.png`
+					
+			objective.edges[side] = edgeImage;
+			objective.cliffs[side] = cliffImage;
 		}
 	}
-
-    loaded(){
-		this.uploaded++;
-		//console.log(`loaded ${this.uploaded} textures`);
+	
+	loadAll(callback){
+		//for functions
+		let loader = this;
 		
-            if(this.uploaded == this.all){
-		        /*drawTiles();
-			    console.log("Load is Succesfull!");	*/
-                        requestAnimationFrame(Core.update);
-		    }
-        }			
+		//callback for one texture
+		let uploaded = () => {
+			loader.uploaded++;
+			
+			if(loader.uploaded == loader.total)
+				callback()
+		}
+		
+		for(let objective of loader.objectives)
+			loader.load(objective, uploaded);
+	}
 }
-
-const loader = new TextureLoader("files/assets/sprites");
-
-loader.addObjectives([
-    Blocks.grass,
-	Blocks.dirt,
-	Blocks.mud,
-	
-	Blocks.stone,
-	Blocks.andesite,
-	Blocks.stoneBlock,
-	
-	Blocks.pebbles,
-	Blocks.flowers,
-	
-	Blocks.water,
-	Blocks.deepWater,
-	Blocks.sand,
-
-    Blocks.fire,
-	Blocks.ladder,
-		
-	Entities.player,
-	Entities.magicSphereSmall,
-		
-    /*grassFloor,
-	grassFloorSwamp,
-	sandFloor,
-	stoneFloor,
-	snowFloor,
-	planksFloor,
-	
-	water,
-	waterSwamp,
-	deepWater,
-	deepWaterSwamp,
-	
-	leavesBlock,
-	woodBlock*/
-]);
-
-loader.loadAll();					

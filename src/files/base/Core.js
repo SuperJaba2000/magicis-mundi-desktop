@@ -24,15 +24,30 @@ const Core = {
 	        requestAnimationFrame(Core.update);
 	},
 	
-	getLastId(){
+	getById(id){
 		return this.lastId++;
+	},
+	
+	init(){
+		this.load();
+		
+		Vars.controls.init();
+        Vars.graphics.init();
+		
+		Vars.changeable.activeMap.generate();
+	},
+	
+	load(){
+		for(let contentList of Vars.content){
+			contentList.load();
+			Vars.loader.addObjectives(contentList.list);
+		}
+		
+		Vars.changeable.camera.load();
+		Vars.loader.loadAll(this.update);
 	}
-
 };
 
-Vars.changeable.activeMap.generate();
-
-Vars.controls.init();
-Vars.graphics.init();
+Core.init();
 
 //Vars.changeable.player.position = Vars.changeable.camera.position;

@@ -22,6 +22,8 @@ const Vars = {
 	    activeMap: new Map('main'),
 		camera: new Camera(),
 	    player: new Player(),
+		
+		isOnline: false,
 			 
 	    fps: 60,
 		pause: false
@@ -30,5 +32,8 @@ const Vars = {
 	graphics: new Graphics(document.getElementById('scene')),
 	controls: new Controls(),
 	
+	loader: new TextureLoader("files/assets/sprites"),
+	
+	content: new Set([Blocks]),
 	mods: new Set(),
 };

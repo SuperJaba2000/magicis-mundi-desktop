@@ -18,13 +18,15 @@ class TestWorldGenerator extends BasicGenerator{
 		noise.setSeed(this.seed**this.seed);
 		let river = Math.abs(noise.octaveSimplex2(x, y, 150, [0.3, 1]))
 		
-		tile.floor = Blocks.grass.getWithVariant(new Random().basic(0, Blocks.grass.variants-1));
+		let rand = new Random();
 		
-		if(new Random().chance(1))
-			tile.overlay = Blocks.pebbles.getWithVariant(new Random().basic(0, Blocks.pebbles.variants-1));
+		tile.floor = Blocks.grass.getWithVariant(rand.basic(0, Blocks.grass.variants-1));
 		
-		if(new Random().chance(1))
-			tile.overlay = Blocks.flowers.getWithVariant(new Random().basic(0, Blocks.flowers.variants-1));
+		if(rand.chance(1))
+			tile.overlay = Blocks.pebbles.getWithVariant(rand.basic(0, Blocks.pebbles.variants-1));
+		
+		if(rand.chance(1))
+			tile.overlay = Blocks.flowers.getWithVariant(rand.basic(0, Blocks.flowers.variants-1));
 		
 		
 		if(path <= 0.04){
@@ -36,7 +38,7 @@ class TestWorldGenerator extends BasicGenerator{
 			//path structures zone
 			tile.floor = Blocks.dirt;
 		}else if(path >= 0.2){
-			tile.elevation = Math.round(path * 10) / 10;
+			tile.elevation = Math.round(path * 10);
 			//tile.elevation -= Math.floor(river*5);
 			
 			tile.elevation = Math.max(tile.elevation, 0);
@@ -50,7 +52,7 @@ class TestWorldGenerator extends BasicGenerator{
 			    tile.elevation = 0;
 		}*/
 		
-		/*if(new Random().chance(0.4)){
+		/*if(rand.chance(0.4)){
 			if(x<1)
 				return;
 			

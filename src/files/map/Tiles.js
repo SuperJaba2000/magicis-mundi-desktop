@@ -8,12 +8,12 @@
 
 
 class Tile{	
-	constructor(floor, block, overlay){
+	constructor(floor, block, overlay, elevation=0){
 		this.x = 0; this.y = 0;
 		this.biome = null;
 		
 		this.light = 0;
-                this.elevation = 0;
+        this.elevation = elevation;
 		
 		this.floor = floor;
 		this.block = block;
@@ -23,7 +23,6 @@ class Tile{
 
 
 class Tiles{
-	
 	constructor(width, height) {
 		this.width = width; 
 		this.height = height;
@@ -153,4 +152,56 @@ class Tiles{
 		
 		return result;
 	}
+}
+
+
+function saveTiles(tiles){
+	let save = new Array(tiles.width).fill().map( () => Array(tiles.height).fill(0) );
+	
+	for(var _x = 0; _x < tiles.width; _x++){
+        for(var _y = 0; _y < tiles.height; _y++){
+            let tile = tiles.get(_x, _y);
+			
+			save[_x][_y] = [
+			    tile.floor ? tile.floor.id : 0,
+				tile.block ? tile.block.id : 0,
+				tile.overlay ? tile.overlay.id : 0,
+				tile.elevation
+			]
+        }
+    }
+	
+	return save;
+}
+
+function loadTiles(save){
+	let tiles = new Tiles(save.length, save[0].length);
+	
+	for(var _x = 0; _x < tiles.width; _x++){
+        for(var _y = 0; _y < tiles.height; _y++){
+            let tile = save.get(_x, _y);
+			
+			tiles[_x][_y] = new Tiles(
+			    tile[0] ? Blocks.getById(tile[0]) : null,
+				tile[1] ? Blocks.getById(tile[1]) : null,
+				tile[2] ? Blocks.getById(tile[2]) : null,
+				tile[3]
+			)
+        }
+    }
+	
+	return tiles;
+}
+
+function saveNow(fileName){
+	const savedTiles = saveTiles(Vars.changeable.activeMap.getActiveWorld().getActiveDimension().tiles);
+    const blob = new Blob([JSON.stringify(savedTiles, null, 0)], {type : 'application/json'});
+	
+	saveAs(blob, fileName);
+}
+
+function loadNow(savedTiles){
+	let tiles = loadTiles(savedTiles);
+	
+	Vars.changeable.activeMap.getActiveWorld().getActiveDimension().tiles = tiles;
 }

@@ -53,8 +53,8 @@ class Graphics {
                 
 		for(let _y = y1; _y < y2; _y++){		
             for(let _x = x1; _x < x2; _x++){
-                let drawX = (_x - x1) * Vars.tileSize;
-                let drawY = (_y - y1) * Vars.tileSize;
+                let drawX = (_x - x1 + camera.position.offsetX) * Vars.tileSize;
+                let drawY = (_y - y1 + camera.position.offsetY) * Vars.tileSize;
 
                 if(!tiles.valid(_x, _y))
 					continue;
@@ -92,8 +92,8 @@ class Graphics {
                 
 		for (let _y = y1; _y < y2; _y++){		
             for(let _x = x1; _x < x2; _x++){
-	            let drawX = (_x - x1) * Vars.tileSize;
-                let drawY = (_y - y1) * Vars.tileSize;
+	            let drawX = (_x - x1 + camera.position.offsetX) * Vars.tileSize;
+                let drawY = (_y - y1 + camera.position.offsetY) * Vars.tileSize;
 
                 if(!tiles.valid(_x, _y))
 					continue;
@@ -158,16 +158,13 @@ class Graphics {
 			//if( Math.abs(camera.position.y - entity.position.y) > this.draw.getTilesScreen().height / 2) continue;
 		
 		for (let _y = y1; _y < y2; _y++){		
-                        for(let _x = x1; _x < x2; _x++){
-                                let drawX = (_x - x1) * Vars.tileSize;
-                                let drawY = (_y - y1) * Vars.tileSize;
-								
+            for(let _x = x1; _x < x2; _x++){
 				let entity = entities.getByCoordinates(_x, _y);
 				
 				if(entity !== null)
-				        this.draw.drawEntity( entity, (entity.position.x - x1)*Vars.tileSize, (entity.position.y - y1)*Vars.tileSize);
+				    this.draw.drawEntity( entity, (entity.position.x - x1)*Vars.tileSize, (entity.position.y - y1)*Vars.tileSize);
 			}
-                }
+        }
 	}
 
         drawEffects() {
@@ -181,8 +178,8 @@ class Graphics {
 		
 		//let activeRegion = player.textureRegion.get();
 		
-		let drawX = (Math.floor(this.draw.getTilesScreen().width/2) - camera.position.x + player.position.x) * Vars.tileSize;
-		let drawY = (Math.floor(this.draw.getTilesScreen().height/2) - camera.position.y + player.position.y) * Vars.tileSize;
+		let drawX = (Math.floor(this.draw.getTilesScreen().width/2) - camera.position.x + player.position.x + camera.position.offsetX) * Vars.tileSize;
+		let drawY = (Math.floor(this.draw.getTilesScreen().height/2) - camera.position.y + player.position.y + camera.position.offsetY) * Vars.tileSize;
 		
 		ctx.globalAlpha = 1;
 		

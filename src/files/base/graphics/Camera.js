@@ -1,22 +1,47 @@
+class CameraAnimation{
+	constructor(name, duration, play){
+		this.name = name;
+		this.duration = duration;
+		
+		this.play = play;
+	}
+	
+	left(){
+		
+	}
+}
+
+let towardLeft = new CameraAnimation()
+
 class Camera{	
 	constructor(){
 		this.position = {
-		        x: 50,y: 50,
+		    x: 50,y: 50,
+			//from -0.5 to +0.5
+			offsetX: 0, offsetY: 0,
 		
-		        set(x, y){
-			        this.x = x;
-			        this.y = y;
-		        }
-	        }
+		    set(x, y){
+			    this.x = x;
+			    this.y = y;
+		    }
+	    }
 	
-	        this.offSetX = 0; this.offSetY = 0;
-	        this.direction = 1;
-	        this.free = false;
+	    this.offSetX = 0; this.offSetY = 0;
+	    this.direction = 1;
+	    this.free = false;
+		
+		this.activeAnimation = new CameraAnimation('empty', Infinity);
 			
 		/*this.time = 0;
 		document.getElementById('scene').addEventListener('tick', (event) => {
             this.time++
         });*/
+	};
+	
+	load(){
+		this.animations = [
+            
+        ]
 	};
 	
 	update(){
@@ -51,6 +76,15 @@ class Camera{
 		
 		
 		//this.position.x = Math.maxVars.changeable.player.position;
+		
+		if(Math.abs(this.position.offsetX) >= 0.5){
+			this.position.x += Math.floor(this.position.offsetX / 0.5);
+			this.position.offsetX = this.position.offsetX % 0.5;
+		}
+		
+        if(Math.abs(this.position.offsetY) >= 0.5){
+			this.position.y += Math.floor(this.position.offsetY / 0.5);
+			this.position.offsetY = this.position.offsetY % 0.5;
+		}		
 	}
-
 }

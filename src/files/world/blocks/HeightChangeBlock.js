@@ -1,9 +1,9 @@
 class HeightChangeBlock extends  Block{
 	
-	constructor(name, color, variants, heightDelta){
-		super(name, color, variants);
+	constructor(name, color, settings){
+		super(name, color, settings);
 		
-		this.heightDelta = heightDelta;
+		this.heightDelta = settings.heightDelta;
 	}
 	
 	playerEntered(player, map){
